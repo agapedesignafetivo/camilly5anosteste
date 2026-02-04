@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#convite {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: black;
+}
+
+/* =========================
+   CAPA INICIAL
+========================= */
+#capa {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+#capa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================
+   VÍDEO DE FUNDO
+========================= */
+#video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* =========================
+   BOTÕES CLICÁVEIS (4 BOTÕES)
+========================= */
+.btn {
+  position: fixed;
+
+  /* 🔵 TAMANHO DA ÁREA CLICÁVEL */
+  width: 70px;
+  height: 70px;
+
+  /* 🔼🔽 SUBIR / DESCER TODOS OS BOTÕES */
+  top: 60%;
+
+  /* ⚠️ CENTRALIZA A ÁREA NO ÍCONE */
+  transform: translate(-50%, -50%);
+
+  z-index: 20;
+  pointer-events: auto;
+}
+
+/* =========================
+   AJUSTES RESPONSIVOS
+========================= */
+@media (min-width: 600px) {
+  .btn {
+    width: 90px;
+    height: 90px;
+    top: 57%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .btn {
+    width: 100px;
+    height: 100px;
+    top: 58%;
+  }
+}
+
+/* =========================
+   POPUP DE PRESENTES
+========================= */
+#popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 50;
+}
+
+#popup img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* =========================
+   BOTÃO VOLTAR (EMBAIXO)
+========================= */
+#voltar {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 30px;
+
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+
+  background: white;
+  color: #7a3b47;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 26px;
+  font-weight: bold;
+  cursor: pointer;
+
+  z-index: 60;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+</style>
+</head>
+
+<body>
+
+<div id="convite">
+
+  <!-- CAPA -->
+  <div id="capa">
+    <img src="capa.jpg">
+  </div>
+
+  <!-- VÍDEO -->
+  <video id="video" playsinline webkit-playsinline muted>
+    <source src="videoteste.mp4" type="video/mp4">
+  </video>
+
+  <!-- MÚSICA -->
+  <audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- =========================
+       4 BOTÕES (ALINHADOS)
+       left controla esquerda/direita
+========================= -->
+
+  <!-- 🔘 1 - Confirmar presença -->
+  <a href="https://wa.me/5548996612459?text=Ol%C3%A1%2C%20gostaria%20de%20confirmar%20minha%20presen%C3%A7a%20na%20festa%20da%20Camilly!"
+     class="btn"
+     style="left:20%;"></a>
+
+  <!-- 📍 2 - Local do evento -->
+  <a href="https://maps.app.goo.gl/ex7rRhNUrPBKwxVB8"
+     class="btn"
+     style="left:40%;"></a>
+
+  <!-- 🎁 3 - Sugestão de presente -->
+  <div id="btn-presente"
+       class="btn"
+       style="left:60%;"></div>
+
+  <!-- 📸 4 - Nosso filtro / fotos -->
+  <a href="https://seu-link-do-filtro-ou-galeria-aqui"
+     class="btn"
+     style="left:80%;"></a>
+
+</div>
+
+<!-- =========================
+     POPUP DE PRESENTES
+========================= -->
+<div id="popup">
+  <div id="voltar">←</div>
+  <img src="sugestao.jpg">
+</div>
+
+<script>
+/* =========================
+   VARIÁVEIS
+========================= */
+const capa = document.getElementById('capa');
+const video = document.getElementById('video');
+const musica = document.getElementById('musica');
+const btnPresente = document.getElementById('btn-presente');
+const popup = document.getElementById('popup');
+const voltar = document.getElementById('voltar');
+
+let audioLiberado = false;
+let posicaoVideo = 0;
+
+/* =========================
+   INICIAR CONVITE
+========================= */
+capa.addEventListener('click', () => {
+  capa.style.display = 'none';
+  video.play().then(() => {
+    if (!audioLiberado) {
+      musica.play().catch(() => {});
+      audioLiberado = true;
+    }
+  });
+});
+
+/* =========================
+   SALVAR POSIÇÃO DO VÍDEO
+========================= */
+setInterval(() => {
+  if (!video.paused && video.duration) {
+    posicaoVideo = video.currentTime;
+  }
+}, 1000);
+
+/* =========================
+   ABRIR POPUP DE PRESENTES
+   🎵 música continua tocando
+========================= */
+btnPresente.addEventListener('click', () => {
+  popup.style.display = 'block';
+  voltar.style.display = 'flex';
+  video.pause();
+});
+
+/* =========================
+   VOLTAR PARA O CONVITE
+========================= */
+voltar.addEventListener('click', () => {
+  popup.style.display = 'none';
+  voltar.style.display = 'none';
+  video.currentTime = posicaoVideo;
+  video.play();
+});
+</script>
+
+</body>
+</html>

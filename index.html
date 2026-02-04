@@ -5,17 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* =========================
-   CONFIGURAÇÕES GERAIS
-========================= */
+/* =================================================
+   CONFIGURAÇÕES GERAIS DA PÁGINA
+================================================= */
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden; /* evita rolagem */
 }
 
+/* Área principal do convite */
 #convite {
   position: relative;
   width: 100%;
@@ -23,9 +24,9 @@ html, body {
   background: black;
 }
 
-/* =========================
-   CAPA INICIAL
-========================= */
+/* =================================================
+   CAPA INICIAL (CLIQUE PARA INICIAR)
+================================================= */
 #capa {
   position: fixed;
   inset: 0;
@@ -38,9 +39,9 @@ html, body {
   object-fit: cover;
 }
 
-/* =========================
+/* =================================================
    VÍDEO DE FUNDO
-========================= */
+================================================= */
 #video {
   position: fixed;
   inset: 0;
@@ -48,37 +49,42 @@ html, body {
   height: 100%;
   object-fit: cover;
   z-index: 1;
-  pointer-events: none;
+  pointer-events: none; /* impede clique no vídeo */
 }
 
-/* =========================
-   BOTÕES CLICÁVEIS (4 BOTÕES)
-========================= */
+/* =================================================
+   BOTÕES INVISÍVEIS (ÁREAS DE CLIQUE)
+================================================= */
 .btn {
   position: fixed;
 
-  /* 🔵 TAMANHO DA ÁREA CLICÁVEL */
+  /* 🔵 TAMANHO DA ÁREA DE CLIQUE
+     AUMENTE se estiver difícil clicar
+     DIMINUA se estiver pegando área errada */
   width: 70px;
   height: 70px;
 
-  /* 🔼🔽 SUBIR / DESCER TODOS OS BOTÕES */
-  top: 60%;
+  /* 🔼🔽 POSIÇÃO VERTICAL (SUBIR / DESCER TODOS)
+     número menor = mais pra CIMA
+     número maior = mais pra BAIXO */
+  top: 58%;
 
-  /* ⚠️ CENTRALIZA A ÁREA NO ÍCONE */
+  /* ⚠️ NÃO MEXER
+     isso centraliza a área exatamente no ponto */
   transform: translate(-50%, -50%);
 
   z-index: 20;
   pointer-events: auto;
 }
 
-/* =========================
-   AJUSTES RESPONSIVOS
-========================= */
+/* =================================================
+   AJUSTES AUTOMÁTICOS PARA TELAS MAIORES
+================================================= */
 @media (min-width: 600px) {
   .btn {
-    width: 90px;
+    width: 90px;   /* área de clique maior */
     height: 90px;
-    top: 57%;
+    top: 57%;      /* sobe um pouco */
   }
 }
 
@@ -90,9 +96,9 @@ html, body {
   }
 }
 
-/* =========================
+/* =================================================
    POPUP DE PRESENTES
-========================= */
+================================================= */
 #popup {
   display: none;
   position: fixed;
@@ -107,9 +113,9 @@ html, body {
   object-fit: contain;
 }
 
-/* =========================
-   BOTÃO VOLTAR (EMBAIXO)
-========================= */
+/* =================================================
+   BOTÃO VOLTAR (EMBAIXO – CÍRCULO COM SETA)
+================================================= */
 #voltar {
   position: fixed;
   left: 50%;
@@ -141,60 +147,77 @@ html, body {
 
 <div id="convite">
 
-  <!-- CAPA -->
+  <!-- =========================
+       CAPA
+  ========================= -->
   <div id="capa">
     <img src="capa.jpg">
   </div>
 
-  <!-- VÍDEO -->
+  <!-- =========================
+       VÍDEO
+  ========================= -->
   <video id="video" playsinline webkit-playsinline muted>
     <source src="videoteste.mp4" type="video/mp4">
   </video>
 
-  <!-- MÚSICA -->
+  <!-- =========================
+       MÚSICA
+  ========================= -->
   <audio id="musica" loop>
     <source src="musica.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- =========================
-       4 BOTÕES (ALINHADOS)
-       left controla esquerda/direita
-========================= -->
+  <!-- =================================================
+       BOTÕES (ÁREAS DE CLIQUE)
+       
+       🔁 COMO FUNCIONA O LEFT:
+       left: 0%   → extremo ESQUERDO
+       left: 50%  → centro da tela
+       left: 100% → extremo DIREITO
+
+       ➡️ AUMENTAR número = vai pra DIREITA
+       ⬅️ DIMINUIR número = vai pra ESQUERDA
+  ================================================= -->
 
   <!-- 🔘 1 - Confirmar presença -->
   <a href="https://wa.me/5548996612459?text=Ol%C3%A1%2C%20gostaria%20de%20confirmar%20minha%20presen%C3%A7a%20na%20festa%20da%20Camilly!"
      class="btn"
-     style="left:20%;"></a>
+     style="left:18%;">
+  </a>
 
   <!-- 📍 2 - Local do evento -->
   <a href="https://maps.app.goo.gl/ex7rRhNUrPBKwxVB8"
      class="btn"
-     style="left:40%;"></a>
+     style="left:38%;">
+  </a>
 
   <!-- 🎁 3 - Sugestão de presente -->
   <div id="btn-presente"
        class="btn"
-       style="left:60%;"></div>
+       style="left:58%;">
+  </div>
 
-  <!-- 📸 4 - Nosso filtro / fotos -->
-  <a href="https://seu-link-do-filtro-ou-galeria-aqui"
+  <!-- 📸 4 - Filtro / fotos -->
+  <a href="https://agapedesignafetivo.github.io/camilly5anos3"
      class="btn"
-     style="left:80%;"></a>
+     style="left:78%;">
+  </a>
 
 </div>
 
-<!-- =========================
+<!-- =================================================
      POPUP DE PRESENTES
-========================= -->
+================================================= -->
 <div id="popup">
   <div id="voltar">←</div>
   <img src="sugestao.jpg">
 </div>
 
 <script>
-/* =========================
+/* =================================================
    VARIÁVEIS
-========================= */
+================================================= */
 const capa = document.getElementById('capa');
 const video = document.getElementById('video');
 const musica = document.getElementById('musica');
@@ -205,9 +228,9 @@ const voltar = document.getElementById('voltar');
 let audioLiberado = false;
 let posicaoVideo = 0;
 
-/* =========================
-   INICIAR CONVITE
-========================= */
+/* =================================================
+   INICIAR CONVITE (CLIQUE NA CAPA)
+================================================= */
 capa.addEventListener('click', () => {
   capa.style.display = 'none';
   video.play().then(() => {
@@ -218,28 +241,28 @@ capa.addEventListener('click', () => {
   });
 });
 
-/* =========================
+/* =================================================
    SALVAR POSIÇÃO DO VÍDEO
-========================= */
+================================================= */
 setInterval(() => {
   if (!video.paused && video.duration) {
     posicaoVideo = video.currentTime;
   }
 }, 1000);
 
-/* =========================
+/* =================================================
    ABRIR POPUP DE PRESENTES
-   🎵 música continua tocando
-========================= */
+   🎵 música NÃO para
+================================================= */
 btnPresente.addEventListener('click', () => {
   popup.style.display = 'block';
   voltar.style.display = 'flex';
   video.pause();
 });
 
-/* =========================
+/* =================================================
    VOLTAR PARA O CONVITE
-========================= */
+================================================= */
 voltar.addEventListener('click', () => {
   popup.style.display = 'none';
   voltar.style.display = 'none';
